@@ -2,8 +2,10 @@ CREATE DATABASE `singlepage` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8
 CREATE TABLE `customer` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
+  `address` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `item` (
   `id` int NOT NULL AUTO_INCREMENT,
   `price` decimal(10,2) DEFAULT NULL,
