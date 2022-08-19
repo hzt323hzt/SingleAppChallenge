@@ -93,4 +93,6 @@ public interface ItemMapper {
      * @mbg.generated Wed Aug 17 23:40:12 EDT 2022
      */
     int updateByPrimaryKey(Item row);
+
+    List<Item> selectAll();
 }
