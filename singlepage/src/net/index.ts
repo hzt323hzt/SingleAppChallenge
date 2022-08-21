@@ -2,9 +2,9 @@ import {del, get, post, put} from "./http";
 import {PaymentResult} from "../utils/model"
 
 export function loadItems() {
-    return post("/load_items",{},{});
+    return get("/load_items",{});
 }
 
-export function result(input: PaymentResult) {
-    return post("/result",{},input);
+export function getResult(result: PaymentResult) {
+    return post("/get_result",{},result);
 }

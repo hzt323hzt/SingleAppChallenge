@@ -5,13 +5,14 @@ export interface ItemTotal extends Item {
 }
 
 export interface Item{
-    id?: number;
-    price?: number;
+    id: number;
+    price: number;
 }
 
 export interface PaymentResult extends Customer{
     total?: number;
     items?: ItemTotal[];
+    submitted?: boolean;
 }
 
 export interface Customer{

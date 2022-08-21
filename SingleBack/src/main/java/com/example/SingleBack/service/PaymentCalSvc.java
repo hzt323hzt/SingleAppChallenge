@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +38,10 @@ public class PaymentCalSvc {
     public PaymentResult calculatePayment(PaymentResult pr) throws TaxjarException {
         Taxjar client = new Taxjar(token);
         Customer cus = customerMapper.selectByPrimaryKey(pr.getId());
+        if(cus == null){
+            pr.setName("");
+            return pr;
+        }
         pr.setName(cus.getName());
         pr.setAddress(cus.getAddress());
         String[] addressInfo = cus.getAddress().split(" ");
@@ -46,10 +52,11 @@ public class PaymentCalSvc {
         BigDecimal sum = BigDecimal.ZERO;
         for(ItemTotal item:pr.getItems()) {
             Item itemOriginal = itemMapper.selectByPrimaryKey(item.getId());
-            item.setTotal(item.getQuantity().multiply(itemOriginal.getPrice()));
-            item.setTax(item.getTotal().multiply(taxRate));
-            sum.add(item.getTotal());
-            sum.add(item.getTax());
+            if(item.getQuantity() == null) item.setQuantity(BigDecimal.ZERO);
+            item.setTotal(item.getQuantity().multiply(itemOriginal.getPrice()).setScale(2,RoundingMode.HALF_UP));
+            item.setTax(item.getTotal().multiply(taxRate).setScale(2, RoundingMode.HALF_UP));
+            sum = sum.add(item.getTotal());
+            sum = sum.add(item.getTax());
         }
         pr.setTotal(sum);
         return pr;
