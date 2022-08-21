@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  web:
+    build: ./singlepage
+    ports:
+      - "3000:3000 "
+    depends_on:
+      - server
+  server:
+    build: ./SingleBack
+    ports:
+      - "8080:8080 "
+    depends_on:
+      - mysql
+  mysql:
+    image: "mysql"
+    ports:
+      - "3306:3306 "
+    restart: always
+    environment:
+    - MYSQL_USER=root
+    - MYSQL_ROOT_PASSWORD: 
+    - MYSQL_ALLOW_EMPTY_PASSWORD:TRUE	
+    command: ["exec mysql -uroot", "./database/database.sql"]
