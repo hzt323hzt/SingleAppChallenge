@@ -2,7 +2,7 @@ import axios, {AxiosRequestHeaders} from "axios";
 
 axios.defaults.withCredentials = true;
 
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = 'http://backend:8080'
 
 export function toQueryString(param: any = {}): string {
     let paramStr: string = ''

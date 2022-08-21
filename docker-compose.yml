@@ -1,24 +1,54 @@
-version: "3.9"
 services:
-  web:
-    build: ./singlepage
-    ports:
-      - "3000:3000 "
-    depends_on:
-      - server
-  server:
-    build: ./SingleBack
-    ports:
-      - "8080:8080 "
-    depends_on:
-      - mysql
-  mysql:
-    image: "mysql"
-    ports:
-      - "3306:3306 "
+  backend:
+    build: SingleBack
     restart: always
+    secrets:
+      - db-password
     environment:
-    - MYSQL_USER=root
-    - MYSQL_ROOT_PASSWORD: 
-    - MYSQL_ALLOW_EMPTY_PASSWORD:TRUE	
-    command: ["exec mysql -uroot", "./database/database.sql"]
+      MYSQL_HOST: db
+    networks:
+      - react-spring
+      - spring-mysql
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:8.0.19
+    environment:
+      - MYSQL_DATABASE=singlepage
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db-password
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "--silent"]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - spring-mysql
+  frontend:
+    build: singlepage
+    ports:
+      - 3000:3000
+    volumes:
+      - ./singlepage/src:/code/src
+      - /project/node_modules
+    networks:
+      - react-spring
+    depends_on:
+      - backend
+    expose:
+      - 3306
+      - 33060
+volumes:
+  db-data: {}
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  react-spring: {}
+  spring-mysql: {}
+
