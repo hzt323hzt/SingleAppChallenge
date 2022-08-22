@@ -1,6 +1,6 @@
 # SingleAppChallenge
 
-The code here satisfies the requirement in coding-challenge.pdf.
+The code here satisfies the requirement of coding-challenge.pdf.
 
 Build and run the application by: 
 
