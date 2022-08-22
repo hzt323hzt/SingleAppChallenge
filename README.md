@@ -19,6 +19,6 @@ Screenshot are here:
 
 ![Screenshot 2](png/2.PNG)
 
-Information of customers and items can be modified by editting <./SingleBack/src/main/resources/data.sql>
+Information of customers and items can be modified by editting [data.sql](https://github.com/hzt323hzt/SingleAppChallenge/blob/main/SingleBack/src/main/resources/data.sql)
 
 
