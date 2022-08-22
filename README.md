@@ -9,6 +9,8 @@ docker compose up -d
 ```
 Then visit <https://localhost:3000>
 
+The instruction to install Docker is [here](https://docs.docker.com/get-docker).
+
 
 Code could run successfully in CentOS 8 amd64.
 Screenshots are here:
