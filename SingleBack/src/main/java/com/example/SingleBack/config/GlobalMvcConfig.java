@@ -11,11 +11,11 @@ public class GlobalMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns(List.of("http://localhost:3000","http://frontend:3000"))
+                .allowedOriginPatterns("**")
                 .allowCredentials(true)
                 .allowedMethods("*")
                 .allowedHeaders("*")
-                .maxAge(3600);
+                .maxAge(36000);
     }
 
 }

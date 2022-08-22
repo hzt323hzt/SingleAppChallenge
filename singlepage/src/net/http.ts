@@ -1,8 +1,10 @@
 import axios, {AxiosRequestHeaders} from "axios";
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
-axios.defaults.baseURL = 'http://backend:8080'
+
+axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 export function toQueryString(param: any = {}): string {
     let paramStr: string = ''
